@@ -1,0 +1,25 @@
+clear; close all; clc;
+
+x = 250;
+y_min = -120;
+y_max = 120;
+num = [30, 50, 100, 300];
+
+for n = num
+    y = linspace(y_min, y_max, n);
+    z = 200 + 50 * sin(2 * pi * (y + 120) / 240);
+    x = x_fixed * ones(size(y));
+    path = [x', y', z'];
+    filename = sprintf('sin_%d_points.txt', n);
+    write_file = fopen(filename,'wt');
+    for i = 1:size(path, 1)
+        for j = 1:size(path, 2)
+            if j == size(path, 2)
+                fprintf(write_file,'%g\n',path(i,j));
+            else
+                fprintf(write_file,'%g\t',path(i,j));
+            end
+        end
+    end
+    fclose(write_file);
+end
